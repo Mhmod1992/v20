@@ -197,6 +197,8 @@
       }
     </style>
     <script src="https://unpkg.com/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+    <!-- Add Babel Standalone for in-browser JSX/TSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
   <script type="importmap">
 {
   "imports": {
@@ -218,6 +220,7 @@
       <div id="blob-3" class="absolute -bottom-8 left-20 h-96 w-96 rounded-full bg-pink-500/20 blur-3xl filter animate-blob animation-delay-4000"></div>
     </div>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <!-- Change script type to text/babel to enable transpilation -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
