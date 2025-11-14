@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نظام إدارة ورشة سيارات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Tajawal:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&family=Lalezar&family=Markazi+Text:wght@400;500;700&display=swap');
+      body {
+        font-family: 'Tajawal', sans-serif;
+      }
+      /* Apply Inter to numbers and Latin text for better rendering */
+      body {
+        font-feature-settings: 'ss02' on; /* More modern number forms in Inter */
+      }
+      input, select, textarea, button {
+        font-family: 'Tajawal', 'Inter', sans-serif;
+      }
+       /* For specifically targeting numbers */
+      .font-numeric {
+        font-family: 'Inter', sans-serif;
+      }
+
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+      
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+      .animate-fadeOut {
+        animation: fadeOut 2s ease-in-out forwards;
+      }
+
+      @keyframes slideInUp {
+        from {
+          transform: translateY(100px) scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+      .animate-slide-in-up {
+        animation: slideInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      @keyframes fadeOutDown {
+        from {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(50px) scale(0.9);
+          opacity: 0;
+        }
+      }
+      .animate-fade-out-down {
+        animation: fadeOutDown 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+      }
+
+      @keyframes progress-bar {
+        from { width: 100%; }
+        to { width: 0%; }
+      }
+      .animate-progress-bar {
+        animation: progress-bar 4.5s linear forwards;
+      }
+
+      @keyframes highlight {
+        0% {
+          background-color: rgba(59, 130, 246, 0.3);
+        }
+        70% {
+          background-color: rgba(59, 130, 246, 0.3);
+        }
+        100% {
+          background-color: transparent;
+        }
+      }
+
+      .animate-highlight {
+          animation: highlight 2.5s ease-out;
+      }
+      
+      @keyframes slideInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-slide-in-down {
+        animation: slideInDown 0.4s ease-out forwards;
+      }
+      
+      .lined-paper {
+          background-size: 100% 2.5rem;
+          background-image: linear-gradient(to bottom, transparent calc(2.5rem - 1px), #e2e8f0 calc(2.5rem - 1px));
+      }
+      .dark .lined-paper {
+          background-image: linear-gradient(to bottom, transparent calc(2.5rem - 1px), #334155 calc(2.5rem - 1px));
+      }
+
+      .page-footer-container {
+        display: none;
+      }
+
+      @keyframes spin-slow {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(90deg); }
+      }
+      .animate-spin-slow {
+        animation: spin-slow 2.5s ease-in-out infinite;
+      }
+
+
+      @media print {
+        @page { 
+          size: A4; 
+          margin: 15mm 10mm 25mm 10mm; /* top, right, bottom, left. Increased bottom margin */
+          
+          @bottom-center {
+            content: "صفحة " counter(page) " من " counter(pages);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 9pt;
+            color: #555;
+          }
+        }
+        body {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .no-print {
+          display: none !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        .print-container, .print-container * {
+          visibility: visible;
+        }
+        .print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        
+        /* Remove screen styles & reduce font size */
+        .report-wrapper > div {
+           box-shadow: none !important;
+           border: none !important;
+           transform: none !important;
+           font-size: 11px !important;
+           font-family: var(--report-font-family) !important;
+        }
+        
+        /* --- Page Break Rules --- */
+        
+        /* Avoid breaking inside these smaller, self-contained components */
+        .info-block, .finding-item, .image-note-card {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important; /* Legacy */
+        }
+        
+        /* Allow breaking for major sections */
+        .report-header-section, .finding-category {
+            break-inside: auto !important;
+            page-break-inside: auto !important; /* Legacy */
+        }
+
+        /* Keep headers attached to their content */
+        .finding-category > h3 {
+            break-after: avoid !important;
+            page-break-after: avoid !important; /* Legacy */
+        }
+
+        /* --- Footer Setup --- */
+        /* Replaced with @page rule for robust numbering */
+        .page-footer-container {
+          display: none !important;
+        }
+      }
+    </style>
+    <script src="https://unpkg.com/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2",
+    "vite": "https://aistudiocdn.com/vite@^7.1.12",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="background-container" class="fixed top-0 left-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-900 bg-cover bg-center">
+      <div id="blob-1" class="absolute top-0 -left-40 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl filter animate-blob"></div>
+      <div id="blob-2" class="absolute top-0 -right-40 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl filter animate-blob animation-delay-2000"></div>
+      <div id="blob-3" class="absolute -bottom-8 left-20 h-96 w-96 rounded-full bg-pink-500/20 blur-3xl filter animate-blob animation-delay-4000"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

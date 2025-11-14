@@ -1,0 +1,8 @@
+{
+  "name": "Aero Edition 1.1",
+  "description": "A redesigned, modern Progressive Web App (PWA) to manage the entire workflow of a car inspection workshop, from request registration to detailed inspection reports and printing.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
